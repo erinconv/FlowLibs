@@ -20,21 +20,6 @@ Alternatively, you can pull the latest build from Docker Hub:
   docker pull erinconv/flowlibs:latest
 ```
 
-## Documentation site
-
-This repository now includes a MkDocs Material documentation site in [`docs/`](docs/).
-
-Install the documentation dependencies and run it locally with:
-
-```bash
-pip install -r docs/requirements.txt
-mkdocs serve
-```
-
-The most detailed page for the new vector export is:
-
-- `docs/vector-outputs.md`
-
 Once the algorithms are either built or pulled, this repository provides different Python wrappers to facilitate the execution of the algorithms.
 
 ### Running the carving algorithm
