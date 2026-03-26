@@ -33,10 +33,10 @@
               << std::endl;
      
      std::cout << "\nOutputs:" << std::endl;
-     std::cout << "  <output_prefix>_streams.tif        Binary stream network (0/1)" << std::endl;
-     std::cout << "  <output_prefix>_stream_order.tif   Horton-Strahler stream order" << std::endl;
-     std::cout << "  <output_prefix>_watersheds.tif     Watershed labels" << std::endl;
-     std::cout << "  <output_prefix>_subcatchments.tif  Subcatchment labels" << std::endl;
+     std::cout << "  <output_prefix>_RIV.tif        Binary stream network (0/1)" << std::endl;
+     std::cout << "  <output_prefix>_RIV_ORD.tif   Horton-Strahler stream order" << std::endl;
+     std::cout << "  <output_prefix>_WAT.tif     Watershed labels" << std::endl;
+     std::cout << "  <output_prefix>_CAT.tif  Subcatchment labels" << std::endl;
      
      std::cout << "\nNotes:" << std::endl;
      std::cout << "  - Pour points are automatically snapped to nearest stream (within 10 pixels)" << std::endl;
@@ -178,10 +178,10 @@
          std::cout << "  SUCCESS!" << std::endl;
          std::cout << "========================================" << std::endl;
          std::cout << "\nOutput files created:" << std::endl;
-         std::cout << "  " << output_prefix << "_streams.tif        - Stream network (binary)" << std::endl;
-         std::cout << "  " << output_prefix << "_stream_order.tif   - Horton-Strahler stream order" << std::endl;
-         std::cout << "  " << output_prefix << "_watersheds.tif     - Watershed labels" << std::endl;
-         std::cout << "  " << output_prefix << "_subcatchments.tif  - Subcatchment labels" << std::endl;
+         std::cout << "  " << output_prefix << "_RIV.tif        - Stream network (binary)" << std::endl;
+         std::cout << "  " << output_prefix << "_RIV_ORD.tif   - Horton-Strahler stream order" << std::endl;
+         std::cout << "  " << output_prefix << "_WAT.tif     - Watershed labels" << std::endl;
+         std::cout << "  " << output_prefix << "_CAT.tif  - Subcatchment labels" << std::endl;
          std::cout << std::endl;
      } else {
          std::cout << "\n========================================" << std::endl;
