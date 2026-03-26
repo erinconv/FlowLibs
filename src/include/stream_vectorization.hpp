@@ -405,7 +405,9 @@ inline int export_stream_network_vector(const StreamVectorizationParams &params)
         feature->SetField("fac_start", accumulation(start_node.x, start_node.y));
         feature->SetField("fac_end", accumulation(end_node.x, end_node.y));
         feature->SetField("fac_max", fac_max);
-        feature->SetField("stream_ord", stream_order(end_node.x, end_node.y));
+        // Reach order should describe the traced segment itself, so use the
+        // upstream/start node order rather than the downstream junction cell.
+        feature->SetField("stream_ord", stream_order(start_node.x, start_node.y));
         feature->SetField("watershed", watershed_labels(end_node.x, end_node.y));
         feature->SetField("subcatch", subcatchment_labels(end_node.x, end_node.y));
         feature->SetGeometry(&line);

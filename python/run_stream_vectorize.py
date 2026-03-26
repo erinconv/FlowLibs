@@ -19,13 +19,13 @@ def main() -> int:
         help="Path to the folder containing the workflow and watershed outputs",
     )
     parser.add_argument("--dem-name", type=str, default="run1_DEM_breached.tif")
-    parser.add_argument("--flow-dirs-name", type=str, default="run1_DIR.tif")
-    parser.add_argument("--accumulation-name", type=str, default="run1_FAC.tif")
-    parser.add_argument("--streams-name", type=str, default="run1_streams.tif")
+    parser.add_argument("--flow-dirs-name", type=str, default="run1_DIR_masked.tif")
+    parser.add_argument("--accumulation-name", type=str, default="run1_FAC_masked.tif")
+    parser.add_argument("--streams-name", type=str, default="run1_streams_masked.tif")
     parser.add_argument("--stream-order-name", type=str, default="run1_stream_order.tif")
     parser.add_argument("--watersheds-name", type=str, default="run1_watersheds.tif")
     parser.add_argument("--subcatchments-name", type=str, default="run1_subcatchments.tif")
-    parser.add_argument("--output-name", type=str, default="run1_river_network.gpkg")
+    parser.add_argument("--output-name", type=str, default="run1_river_network_masked.gpkg")
     parser.add_argument("--image", type=str, default="erinconv/flowlibs:latest")
 
     args = parser.parse_args()
@@ -50,6 +50,13 @@ def main() -> int:
         if not os.path.isfile(file_path):
             print(f"ERROR: Missing required file: {file_path}", file=sys.stderr)
             return 1
+
+    print("Using masked hydrology rasters for vectorization:")
+    print(f"  flow directions: {args.flow_dirs_name}")
+    print(f"  accumulation:    {args.accumulation_name}")
+    print(f"  streams:         {args.streams_name}")
+    print(f"  output:          {args.output_name}")
+    print()
 
     cmd = [
         "docker",
