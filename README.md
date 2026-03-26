@@ -56,10 +56,10 @@ By default, this command expects the following rasters in the folder:
 - `run1_DEM_breached.tif`
 - `run1_DIR.tif`
 - `run1_FAC.tif`
-- `run1_streams.tif`
-- `run1_stream_order.tif`
-- `run1_watersheds.tif`
-- `run1_subcatchments.tif`
+- `run1_RIV.tif`
+- `run1_RIV_ORD.tif`
+- `run1_WAT.tif`
+- `run1_CAT.tif`
 
 It writes:
 
