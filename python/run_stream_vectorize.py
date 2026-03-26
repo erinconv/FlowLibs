@@ -5,8 +5,9 @@ Export the stream network to a vector dataset.
 
 import argparse
 import os
-import subprocess
 import sys
+
+import docker_run
 
 
 def main() -> int:
@@ -81,11 +82,10 @@ def main() -> int:
     print(" ".join(cmd))
     print()
 
-    try:
-        subprocess.run(cmd, check=True)
-    except subprocess.CalledProcessError as exc:
-        print(f"ERROR: Stream vectorization failed with code {exc.returncode}", file=sys.stderr)
-        return exc.returncode
+    rc = docker_run.run_docker(cmd)
+    if rc != 0:
+        print(f"ERROR: Stream vectorization failed with code {rc}", file=sys.stderr)
+        return rc
 
     print(f"Vector network: {os.path.join(input_path, args.output_name)}")
     return 0

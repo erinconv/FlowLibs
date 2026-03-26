@@ -5,9 +5,10 @@ Runs watershed delineation using the dephier Docker container
 """
 
 import os
-import subprocess
 import sys
 import argparse
+
+import docker_run
 
 def create_pourpoints_file(output_file, pour_points):
     """
@@ -179,25 +180,22 @@ def main():
     print(" ".join(cmd))
     print()
 
-    try:
-        result = subprocess.run(cmd, check=True)
+    result = docker_run.run_docker(cmd)
 
-        if result.returncode == 0:
-            print("\n" + "="*60)
-            print("SUCCESS!")
-            print("="*60)
-            print("\nOutput files:")
-            print(f"  {watershed_output_prefix}_RIV.tif        - Stream network (binary)")
-            print(f"  {watershed_output_prefix}_RIV_ORD.tif   - Horton-Strahler stream order")
-            print(f"  {watershed_output_prefix}_WAT.tif     - Watershed labels")
-            print(f"  {watershed_output_prefix}_CAT.tif  - Subcatchment labels")
-            print(f"\nLocation: {input_path}")
+    if result == 0:
+        print("\n" + "="*60)
+        print("SUCCESS!")
+        print("="*60)
+        print("\nOutput files:")
+        print(f"  {watershed_output_prefix}_RIV.tif        - Stream network (binary)")
+        print(f"  {watershed_output_prefix}_RIV_ORD.tif   - Horton-Strahler stream order")
+        print(f"  {watershed_output_prefix}_WAT.tif     - Watershed labels")
+        print(f"  {watershed_output_prefix}_CAT.tif  - Subcatchment labels")
+        print(f"\nLocation: {input_path}")
+    else:
+        print(f"\nERROR: Watershed delineation failed with code {result}", file=sys.stderr)
 
-        return result.returncode
-
-    except subprocess.CalledProcessError as e:
-        print(f"\nERROR: Watershed delineation failed with code {e.returncode}", file=sys.stderr)
-        return e.returncode
+    return result
 
 
 if __name__ == "__main__":

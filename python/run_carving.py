@@ -1,7 +1,8 @@
 import os
 import argparse
-import subprocess
 import sys
+
+import docker_run
 
 
 def main() -> int:
@@ -32,7 +33,7 @@ def main() -> int:
     # Assign parsed arguments to the variablesd
     input_path = args.input_path
     if not os.path.isfile(input_path):
-        raise FileNotFoundError(f"Input file not found: {input_path}", file=sys.stderr)
+        raise FileNotFoundError(f"Input file not found: {input_path}")
 
     mount_dir = os.path.dirname(input_path)
     input_name = os.path.basename(input_path)
@@ -69,12 +70,9 @@ def main() -> int:
     print(" ".join(cmd))
     print()
 
-    try:
-        completed = subprocess.run(cmd, check=True)
-        if completed.returncode != 0:
-            return completed.returncode
-    except subprocess.CalledProcessError as e:
-        return e.returncode
+    rc = docker_run.run_docker(cmd)
+    if rc != 0:
+        return rc
 
     print(f"Breached DEM: {os.path.join(output_dir, args.output_prefix + '_DEM_breached.tif')}")
     print(f"Flow directions: {os.path.join(output_dir, args.output_prefix + '_DIR.tif')}")
