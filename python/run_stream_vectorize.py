@@ -5,8 +5,9 @@ Export the stream network to a vector dataset.
 
 import argparse
 import os
-import subprocess
 import sys
+
+import docker_run
 
 
 def main() -> int:
@@ -19,13 +20,13 @@ def main() -> int:
         help="Path to the folder containing the workflow and watershed outputs",
     )
     parser.add_argument("--dem-name", type=str, default="run1_DEM_breached.tif")
-    parser.add_argument("--flow-dirs-name", type=str, default="run1_DIR_masked.tif")
-    parser.add_argument("--accumulation-name", type=str, default="run1_FAC_masked.tif")
-    parser.add_argument("--streams-name", type=str, default="run1_streams_masked.tif")
-    parser.add_argument("--stream-order-name", type=str, default="run1_stream_order.tif")
-    parser.add_argument("--watersheds-name", type=str, default="run1_watersheds.tif")
-    parser.add_argument("--subcatchments-name", type=str, default="run1_subcatchments.tif")
-    parser.add_argument("--output-name", type=str, default="run1_river_network_masked.gpkg")
+    parser.add_argument("--flow-dirs-name", type=str, default="run1_DIR.tif")
+    parser.add_argument("--accumulation-name", type=str, default="run1_FAC.tif")
+    parser.add_argument("--streams-name", type=str, default="run1_RIV.tif")
+    parser.add_argument("--stream-order-name", type=str, default="run1_RIV_ORD.tif")
+    parser.add_argument("--watersheds-name", type=str, default="run1_WAT.tif")
+    parser.add_argument("--subcatchments-name", type=str, default="run1_CAT.tif")
+    parser.add_argument("--output-name", type=str, default="run1_river_network.gpkg")
     parser.add_argument("--image", type=str, default="erinconv/flowlibs:latest")
 
     args = parser.parse_args()
@@ -81,11 +82,10 @@ def main() -> int:
     print(" ".join(cmd))
     print()
 
-    try:
-        subprocess.run(cmd, check=True)
-    except subprocess.CalledProcessError as exc:
-        print(f"ERROR: Stream vectorization failed with code {exc.returncode}", file=sys.stderr)
-        return exc.returncode
+    rc = docker_run.run_docker(cmd)
+    if rc != 0:
+        print(f"ERROR: Stream vectorization failed with code {rc}", file=sys.stderr)
+        return rc
 
     print(f"Vector network: {os.path.join(input_path, args.output_name)}")
     return 0

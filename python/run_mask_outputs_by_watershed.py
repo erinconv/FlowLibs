@@ -5,8 +5,9 @@ Mask all output rasters in a folder using a watershed raster.
 
 import argparse
 import os
-import subprocess
 import sys
+
+import docker_run
 
 
 def main() -> int:
@@ -21,7 +22,7 @@ def main() -> int:
     parser.add_argument(
         "--watershed-name",
         type=str,
-        default="run1_watersheds.tif",
+        default="run1_WAT.tif",
         help="Watershed raster name inside the folder",
     )
     parser.add_argument(
@@ -89,11 +90,10 @@ def main() -> int:
         print("\nRunning command:")
         print(" ".join(cmd))
 
-        try:
-            subprocess.run(cmd, check=True)
-        except subprocess.CalledProcessError as exc:
-            print(f"ERROR: Failed masking {raster_name} with code {exc.returncode}", file=sys.stderr)
-            return exc.returncode
+        rc = docker_run.run_docker(cmd)
+        if rc != 0:
+            print(f"ERROR: Failed masking {raster_name} with code {rc}", file=sys.stderr)
+            return rc
 
     print("\nMasked rasters created successfully.")
     return 0

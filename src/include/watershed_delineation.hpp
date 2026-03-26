@@ -968,7 +968,7 @@ int WatershedDelineation::run_watershed_delineation(const std::vector<PourPoint>
         // Save stream network
         std::cout << "Saving stream network..." << std::endl;
         stream_grid.setNoData(0);  // Set NoData value to 0 (background)
-        stream_grid.saveGDAL(params.output_prefix + "_streams.tif");
+        stream_grid.saveGDAL(params.output_prefix + "_RIV.tif");
         
         // Calculate Horton-Strahler stream order
         std::cout << "\n=== STREAM ORDER CLASSIFICATION ===" << std::endl;
@@ -980,7 +980,7 @@ int WatershedDelineation::run_watershed_delineation(const std::vector<PourPoint>
         // Save stream order
         std::cout << "Saving stream order..." << std::endl;
         stream_order.setNoData(0);  // Set NoData value to 0 (non-stream)
-        stream_order.saveGDAL(params.output_prefix + "_stream_order.tif");
+        stream_order.saveGDAL(params.output_prefix + "_RIV_ORD.tif");
         
         // Delineate watersheds
         std::cout << "\n=== WATERSHED DELINEATION ===" << std::endl;
@@ -993,7 +993,7 @@ int WatershedDelineation::run_watershed_delineation(const std::vector<PourPoint>
         // Save watershed labels
         std::cout << "Saving watershed labels..." << std::endl;
         watershed_label.setNoData(0);  // Set NoData value to 0 (background)
-        watershed_label.saveGDAL(params.output_prefix + "_watersheds.tif");
+        watershed_label.saveGDAL(params.output_prefix + "_WAT.tif");
 
         // Save masked copies of selected outputs using the delineated watershed raster
         std::cout << "Saving masked outputs..." << std::endl;
@@ -1029,7 +1029,7 @@ int WatershedDelineation::run_watershed_delineation(const std::vector<PourPoint>
         if (num_subcatchments > 0) {
             std::cout << "Saving subcatchment labels..." << std::endl;
             subcatchment_label.setNoData(0);  // Set NoData value to 0 (background)
-            subcatchment_label.saveGDAL(params.output_prefix + "_subcatchments.tif");
+            subcatchment_label.saveGDAL(params.output_prefix + "_CAT.tif");
         }
         
         // Calculate and print statistics for each watershed
@@ -1053,11 +1053,11 @@ int WatershedDelineation::run_watershed_delineation(const std::vector<PourPoint>
         
         std::cout << "\n=== WATERSHED DELINEATION COMPLETED ===" << std::endl;
         std::cout << "Output files created:" << std::endl;
-        std::cout << "  " << params.output_prefix << "_streams.tif - Stream network (binary)" << std::endl;
-        std::cout << "  " << params.output_prefix << "_stream_order.tif - Horton-Strahler stream order" << std::endl;
-        std::cout << "  " << params.output_prefix << "_watersheds.tif - Watershed labels" << std::endl;
+        std::cout << "  " << params.output_prefix << "_RIV.tif - Stream network (binary)" << std::endl;
+        std::cout << "  " << params.output_prefix << "_RIV_ORD.tif - Horton-Strahler stream order" << std::endl;
+        std::cout << "  " << params.output_prefix << "_WAT.tif - Watershed labels" << std::endl;
         if (num_subcatchments > 0) {
-            std::cout << "  " << params.output_prefix << "_subcatchments.tif - Subcatchment labels (" 
+            std::cout << "  " << params.output_prefix << "_CAT.tif - Subcatchment labels (" 
                       << num_subcatchments << " non-empty subcatchments)" << std::endl;
         }
         
