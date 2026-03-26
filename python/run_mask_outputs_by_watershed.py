@@ -21,7 +21,7 @@ def main() -> int:
     parser.add_argument(
         "--watershed-name",
         type=str,
-        default="run1_watersheds.tif",
+        default="run1_WAT.tif",
         help="Watershed raster name inside the folder",
     )
     parser.add_argument(

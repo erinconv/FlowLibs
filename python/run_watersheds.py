@@ -187,10 +187,10 @@ def main():
             print("SUCCESS!")
             print("="*60)
             print("\nOutput files:")
-            print(f"  {watershed_output_prefix}_streams.tif        - Stream network (binary)")
-            print(f"  {watershed_output_prefix}_stream_order.tif   - Horton-Strahler stream order")
-            print(f"  {watershed_output_prefix}_watersheds.tif     - Watershed labels")
-            print(f"  {watershed_output_prefix}_subcatchments.tif  - Subcatchment labels")
+            print(f"  {watershed_output_prefix}_RIV.tif        - Stream network (binary)")
+            print(f"  {watershed_output_prefix}_RIV_ORD.tif   - Horton-Strahler stream order")
+            print(f"  {watershed_output_prefix}_WAT.tif     - Watershed labels")
+            print(f"  {watershed_output_prefix}_CAT.tif  - Subcatchment labels")
             print(f"\nLocation: {input_path}")
 
         return result.returncode
